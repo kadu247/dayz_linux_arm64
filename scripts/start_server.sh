@@ -1,27 +1,62 @@
 #!/bin/bash
 
-#version=26
-#appid=1042420
-#dayz_id=221100
-#stable=223350
-#exp_branch=1042420
+# Set variables
+APPID=1042420
+STEAMCMD_DIR="$HOME/steamcmd"
+SERVER_DIR="$HOME/dayzserver"
+SERVER_CONFIG="$SERVER_DIR/serverDZ.cfg"
+SERVER_PROFILE="$SERVER_DIR/profile"
+SERVER_PORT=2302
+SERVER_CPU_COUNT=4
 
-export LD_LIBRARY_PATH="$HOME/lib:$HOME/Steam/linux32:$HOME/Steam/linux64:$HOME/dayzserver:$LD_LIBRARY_PATH"
-export PATH="$HOME/lib:$HOME/Steam/linux32:$HOME/Steam/linux64:$HOME/dayzserver:$PATH"
+cd "$SERVER_DIR"
+
+export LD_LIBRARY_PATH="$SERVER_DIR:$LD_LIBRARY_PATH"
 
 # Function to check if Server is running
 is_app_running() {
   pgrep -f "DayZServer" > /dev/null
 }
 
+# Function to get the latest version number from Steam
+get_latest_version() {
+  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +app_info_print $APPID +quit | grep -m1 -Po '"buildid" "\K\d+'
+}
+
+# Function to validate the server
+validate_server() {
+  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit
+}
+
+# Function to update the server
+update_server() {
+  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
+}
+
+# Function to start the server
+start_server() {
+  box64 "$SERVER_DIR/DayZServer" -config="$SERVER_CONFIG" -profiles="$SERVER_PROFILE" -port="$SERVER_PORT" -cpuCount="$SERVER_CPU_COUNT" -freezecheck
+}
+
 # Loop indefinitely
 while true; do
-  # Check if ./app is running
+  # Check if Server is running
   if ! is_app_running; then
-    echo "Update Server"
-    box64 /home/ubuntu/Steam/linux32/steamcmd +force_install_dir /home/ubuntu/dayzserver +login anonymous +app_update 1042420 +quit
-    echo "Restarting Server"
-    box64 DayZServer -config=serverDZ.cfg -profiles=profile -port=2302 -cpuCount=4 -freezecheck
+    echo "Server is not running. Checking for updates..."
+    current_version=$(cat "$SERVER_DIR/steamapps/appmanifest_$APPID.acf" | grep -Po '"buildid" "\K\d+')
+    latest_version=$(get_latest_version)
+
+    if [ "$current_version" != "$latest_version" ]; then
+      echo "An update is available. Validating server files..."
+      validate_server
+      echo "Updating server..."
+      update_server
+    else
+      echo "Server is up to date."
+    fi
+
+    echo "Starting server..."
+    start_server
   fi
 
   # Sleep for 15 seconds
