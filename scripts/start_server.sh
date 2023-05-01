@@ -13,7 +13,7 @@ SERVER_CPU_COUNT=4
 if [ ! -d "$SERVER_DIR" ]; then
   echo "Creating server directory: $SERVER_DIR"
   mkdir -p "$SERVER_DIR"
-  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
+  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
 fi
 
 cd "$SERVER_DIR"
@@ -27,17 +27,17 @@ is_app_running() {
 
 # Function to get the latest version number from Steam
 get_latest_version() {
-  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +app_info_print $APPID +quit | grep -m1 -Po '"buildid" "\K\d+'
+  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +app_info_print $APPID +quit | grep -m1 -Po '"buildid" "\K\d+'
 }
 
 # Function to validate the server
 validate_server() {
-  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit
+  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit
 }
 
 # Function to update the server
 update_server() {
-  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
+  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
 }
 
 # Function to start the server
@@ -49,7 +49,7 @@ start_server() {
 while true; do
   # Check if Server is running
   if ! is_app_running; then
-    echo "Server is not running. Checking for updates..."
+    echo "Checking for updates..."
     current_version=$(cat "$SERVER_DIR/steamapps/appmanifest_$APPID.acf" | grep -Po '"buildid" "\K\d+')
     latest_version=$(get_latest_version)
 
