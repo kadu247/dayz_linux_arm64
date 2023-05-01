@@ -39,18 +39,16 @@ sudo apt update
 clear
 echo "Add contrib and non-free to debian sources..."
 sleep 4
-# Backup the sources.list file
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 # Check if "contrib" and "non-free" components are already present in sources.list
 if grep -q "contrib\|non-free" /etc/apt/sources.list; then
   echo "The 'contrib' and 'non-free' components are already present in sources.list"
 else
+  # Backup the sources.list file
+  sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
   # Add "contrib" and "non-free" components to the existing repository lines in sources.list
   sudo sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
-
   # Update the package lists
   sudo apt update
-
   echo "The 'contrib' and 'non-free' components have been added to sources.list"
 fi
 
@@ -119,6 +117,11 @@ sleep 4
 sudo apt install -y libcap2:amd64
 sudo apt install -y libsdl2-2.0-0
 
+# Delete unneeded scripts
+clear
+echo "Delete unneeded install scripts..."
+sleep 4
+rm install.sh
 
 clear
 echo "All done!"
