@@ -13,7 +13,7 @@ SERVER_CPU_COUNT=4
 if [ ! -d "$SERVER_DIR" ]; then
   echo "Creating server directory: $SERVER_DIR"
   mkdir -p "$SERVER_DIR"
-  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
+  $STEAMCMD_DIR/steamcmd_arm.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
 fi
 
 cd "$SERVER_DIR"
@@ -27,17 +27,17 @@ is_app_running() {
 
 # Function to get the latest version number from Steam
 get_latest_version() {
-  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +app_info_print $APPID +quit | grep -m1 -Po '"buildid" "\K\d+'
+  $STEAMCMD_DIR/steamcmd_arm.sh +login anonymous +app_info_print $APPID +quit | grep -m1 -Po '"buildid" "\K\d+'
 }
 
 # Function to validate the server
 validate_server() {
-  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit
+  $STEAMCMD_DIR/steamcmd_arm.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit
 }
 
 # Function to update the server
 update_server() {
-  $STEAMCMD_DIR/steamcmd_mod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
+  $STEAMCMD_DIR/steamcmd_arm.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
 }
 
 # Function to start the server
