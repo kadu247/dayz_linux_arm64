@@ -76,6 +76,13 @@ echo "Downloading modded steamcmd script file to launch steamcmd emulated by box
 sleep 4
 curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/steamcmdmod.sh" -o steamcmdmod.sh
 
+# download start_server.sh script file
+clear
+cd ~
+echo "Downloading script to start Dayz Server emulated by box64..."
+sleep 4
+curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/start_server.sh" -o start_server-sh
+
 clear
 echo "All done!"
 echo "Don't forget to configure serverDZ.cfg file. Also the startdayz.sh file with, for example, the number of cores your machine has."
