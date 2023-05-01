@@ -75,13 +75,15 @@ clear
 echo "Downloading modded steamcmd script file to launch steamcmd emulated by box86..."
 sleep 4
 curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/steamcmdmod.sh" -o steamcmdmod.sh
+chmod +x steamcmdmod.sh
 
 # download start_server.sh script file
 clear
 cd ~
 echo "Downloading script to start Dayz Server emulated by box64..."
 sleep 4
-curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/start_server.sh" -o start_server-sh
+curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/start_server.sh" -o start_server.sh
+chmod +x start_server.sh
 
 clear
 echo "All done!"
