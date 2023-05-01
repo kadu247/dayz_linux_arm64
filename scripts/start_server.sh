@@ -9,6 +9,13 @@ SERVER_PROFILE="$SERVER_DIR/profile"
 SERVER_PORT=2302
 SERVER_CPU_COUNT=4
 
+# Check if server files exists, create and install dayz server if it doesn't exist
+if [ ! -d "$SERVER_DIR" ]; then
+  echo "Creating server directory: $SERVER_DIR"
+  mkdir -p "$SERVER_DIR"
+  $STEAMCMD_DIR/steamcmdmod.sh +login anonymous +force_install_dir $SERVER_DIR +app_update $APPID +quit
+fi
+
 cd "$SERVER_DIR"
 
 export LD_LIBRARY_PATH="$SERVER_DIR:$LD_LIBRARY_PATH"
