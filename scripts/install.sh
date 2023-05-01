@@ -23,7 +23,7 @@ clear
 echo "Installing needed tools..."
 sleep 4
 sudo apt update
-sudo apt install -y nano wget curl git gpg
+sudo apt install -y nano wget curl git tmux gpg
 
 # enable arch needed to run box86
 clear
