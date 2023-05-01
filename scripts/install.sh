@@ -28,6 +28,8 @@ clear
 echo "Enabling armhf architecture..."
 sleep 4
 sudo dpkg --add-architecture armhf
+sudo dpkg --add-architecture i386
+sudo dpkg --add-architecture amd64
 sudo apt update
 
 # install box86
