@@ -18,7 +18,7 @@ fi
 
 # install some needed tools
 clear
-echo "Installing nano, wget, curl, git, and gpg..."
+echo "Installing needed tools..."
 sleep 4
 sudo apt update
 sudo apt install -y nano wget curl git gpg
@@ -42,7 +42,7 @@ sudo apt update && sudo apt install -y box86
 
 # needed to start box86
 clear
-echo "Installing libc6:armhf..."
+echo "Installing libraries needed to run Box86..."
 sleep 4
 sudo apt install -y libc6:armhf
 
@@ -86,6 +86,14 @@ echo "Downloading script to start Dayz Server emulated by box64..."
 sleep 4
 curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/start_server.sh" -o start_server.sh
 chmod +x start_server.sh
+
+# needed to start dayz server
+clear
+echo "Installing libraries needed to run Dayz Server..."
+sleep 4
+sudo apt install -y libcap2:amd64
+sudo apt install -y libsdl2-2.0-0
+
 
 clear
 echo "All done!"
