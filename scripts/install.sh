@@ -101,8 +101,8 @@ curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.g
 clear
 echo "Downloading modded steamcmd script file to launch steamcmd emulated by box86..."
 sleep 4
-curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/steamcmdmod.sh" -o steamcmd_mod.sh
-chmod +x steamcmd_mod.sh
+curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/steamcmdmod.sh" -o steamcmd_arm.sh
+chmod +x steamcmd_arm.sh
 
 # download start_server.sh script file
 clear
