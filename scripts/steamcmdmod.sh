@@ -32,15 +32,15 @@ if [ "$DEBUGGER" == "gdb" ] || [ "$DEBUGGER" == "cgdb" ]; then
   fi
 
   : "${DEBUGGER_ARGS=}"
-  $DEBUGGER -x "$ARGSFILE" $DEBUGGER_ARGS --args box32 "$STEAMEXE" "$@"
+  $DEBUGGER -x "$ARGSFILE" $DEBUGGER_ARGS --args box86 "$STEAMEXE" "$@"
   rm "$ARGSFILE"
 else
-  $DEBUGGER box32 "$STEAMEXE" "$@"
+  $DEBUGGER box86 "$STEAMEXE" "$@"
 fi
 
 STATUS=$?
 
 if [ $STATUS -eq $MAGIC_RESTART_EXITCODE ]; then
-    exec box32 "$0" "$@"
+    exec box86 "$0" "$@"
 fi
 exit $STATUS
