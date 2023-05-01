@@ -11,8 +11,10 @@ if [ "$choice" != "y" ]; then
 fi
 
 # check if script is running in home directory, go there if not
+clear
 if [ "$PWD" != "$HOME" ]; then
   echo "Moving to home directory..."
+  sleep 4
   cd ~
 fi
 
@@ -25,12 +27,32 @@ sudo apt install -y nano wget curl git gpg
 
 # enable arch needed to run box86
 clear
-echo "Enabling armhf architecture..."
+echo "Enabling armhf, i386 and amd64 architectures..."
 sleep 4
 sudo dpkg --add-architecture armhf
 sudo dpkg --add-architecture i386
 sudo dpkg --add-architecture amd64
 sudo apt update
+
+# Add contrib" and "non-free to debian sources
+# Backup the sources.list file
+clear
+echo "Add contrib and non-free to debian sources..."
+sleep 4
+# Backup the sources.list file
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+# Check if "contrib" and "non-free" components are already present in sources.list
+if grep -q "contrib\|non-free" /etc/apt/sources.list; then
+  echo "The 'contrib' and 'non-free' components are already present in sources.list"
+else
+  # Add "contrib" and "non-free" components to the existing repository lines in sources.list
+  sudo sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
+
+  # Update the package lists
+  sudo apt update
+
+  echo "The 'contrib' and 'non-free' components have been added to sources.list"
+fi
 
 # install box86
 clear
@@ -64,6 +86,9 @@ if [ ! -d "steamcmd" ]; then
 fi
 
 # navigate to steamcmd folder
+clear
+echo "Moving to steamcmd directory..."
+sleep 4
 cd steamcmd
 
 # download and extract steamcmd
@@ -76,8 +101,8 @@ curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.g
 clear
 echo "Downloading modded steamcmd script file to launch steamcmd emulated by box86..."
 sleep 4
-curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/steamcmdmod.sh" -o steamcmdmod.sh
-chmod +x steamcmdmod.sh
+curl -sqL "https://raw.githubusercontent.com/kadu247/dayz_linux_arm64/main/scripts/steamcmdmod.sh" -o steamcmd_mod.sh
+chmod +x steamcmd_mod.sh
 
 # download start_server.sh script file
 clear
