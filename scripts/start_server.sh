@@ -9,6 +9,7 @@ SERVER_PROFILE="$SERVER_DIR/profile"
 SERVER_PORT=2302
 SERVER_CPU_COUNT=4
 SERVER_FPS=60
+SERVER_IP="0.0.0.0"
 
 # Check if SERVER_DIR exists and create it if it doesn't exist
 if [ ! -d "$SERVER_DIR" ]; then
@@ -38,7 +39,7 @@ update_server() {
 
 # Function to start the server
 start_server() {
-  box64 "$SERVER_DIR/DayZServer" -config="$SERVER_CONFIG" -profiles="$SERVER_PROFILE" -port="$SERVER_PORT" -cpuCount="$SERVER_CPU_COUNT" -limitFPS="$SERVER_FPS" -adminLog -freezecheck
+  box64 "$SERVER_DIR/DayZServer" -ip="$SERVER_IP" -port="$SERVER_PORT" -config="$SERVER_CONFIG" -profiles="$SERVER_PROFILE" -mod= -servermod= -bepath= -limitFPS="$SERVER_FPS" -adminLog -freezecheck
 }
 
 # Loop indefinitely
