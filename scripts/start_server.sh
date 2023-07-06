@@ -20,7 +20,7 @@ USE_CUSTOM_INIT="1"
 if [ ! -d "$SERVER_DIR" ]; then
   echo "Creating server directory: $SERVER_DIR"
   mkdir -p "$SERVER_DIR"
-  "$STEAMCMD_DIR/steamcmdmod.sh" +login anonymous +force_install_dir "$SERVER_DIR" +app_update "$APPID" +quit
+  "$STEAMCMD_DIR/steamcmd_arm.sh" +login anonymous +force_install_dir "$SERVER_DIR" +app_update "$APPID" +quit
 fi
 
 cd "$SERVER_DIR"
